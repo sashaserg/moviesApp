@@ -1,25 +1,31 @@
+/* library */
 import React from 'react';
-import logo from './logo.svg';
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
+
+/* component */
+import Header from './component/Header/Header.js'
+import MainPage from './view/MainPage/MainPage.js'
+
+/* style */
 import './App.css';
+
+/* FontAwesome */
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faKissBeam, faChevronDown } from '@fortawesome/free-solid-svg-icons'
+library.add( faKissBeam, faChevronDown );
+
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+          <Header/>
+          <Switch>
+            <Route exact path='/' component={ MainPage }/>
+            <Route path='/home' component={ MainPage }/>
+            {/* <Route component={NotFound}/> */}
+          </Switch>
+          {/* <DevTools /> */}
+    </Router>
   );
 }
 
