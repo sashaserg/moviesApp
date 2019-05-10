@@ -11,8 +11,8 @@ import './App.css';
 
 /* FontAwesome */
 import { library } from '@fortawesome/fontawesome-svg-core'
-import { faKissBeam, faChevronDown } from '@fortawesome/free-solid-svg-icons'
-library.add( faKissBeam, faChevronDown );
+import { faKissBeam, faChevronDown, faArrowAltCircleLeft, faArrowAltCircleRight, faStar } from '@fortawesome/free-solid-svg-icons'
+library.add( faKissBeam, faChevronDown, faArrowAltCircleLeft, faArrowAltCircleRight, faStar );
 
 
 function App() {

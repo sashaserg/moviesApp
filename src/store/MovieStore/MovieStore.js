@@ -22,24 +22,28 @@ class MovieStore {
 
     @action('fetch latest movies by page number')
     getLatestMovies(page) {
-        this.isFetching = true;
-        this.curPage = page;    
+        return new Promise((res, rej) => {
+            this.isFetching = true;
+            this.curPage = page;    
 
-        getLatestMoviesByPage(page)
-            .then(({ data }) => {
-				console.log("TCL: MovieStore -> getLatestMovies -> data", data)
-                const arrayOfMovies = data.results.map((item) => {
-                    return { poster_url: posterURL + item.poster_path, 
-                             title: item.title, 
-                             id: item.id, 
-                             overview: item.overview,
-                             release_date: item.release_date,
-                             vote_average: item.vote_average }
+            getLatestMoviesByPage(page)
+                .then(({ data }) => {
+                    console.log("TCL: MovieStore -> getLatestMovies -> data", data)
+                    const arrayOfMovies = data.results.map((item) => {
+                        return { poster_url: posterURL + item.poster_path, 
+                                title: item.title, 
+                                id: item.id, 
+                                overview: item.overview,
+                                release_date: item.release_date,
+                                vote_average: item.vote_average,
+                                rating: item.adult ? 'NC-17' : 'R' }
+                    });
+                    this.latestMovies = arrayOfMovies;
+                    this.maxPage = data.total_pages;
+                    this.isFetching = false;
+                    res();
                 });
-                this.latestMovies = arrayOfMovies;
-                this.maxPage = data.total_pages;
-                this.isFetching = false;
-            });
+        })
     }
 
     @action('fetch favorite movies from locale store')

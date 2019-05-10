@@ -13,9 +13,20 @@ import './MainPage.sass';
 /* store */
 import MovieStore from '../../store/MovieStore/MovieStore.js';
 
+/* component */
+import MovieDetailModal from '../../component/MovieDetailModal/MovieDetailModal.js';
+
+
 @observer
 class MainPage extends Component
 {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showModal: false,
+      curMovie: null,
+    };
+  }
 
   componentDidMount() {
     MovieStore.getLatestMovies(1);
@@ -25,15 +36,45 @@ class MainPage extends Component
 		MovieStore.getLatestMovies(curPage);
   }
 
+  movieSelectHandler = (movieIndex) => {
+    this.setState({
+      curMovie: movieIndex,
+      showModal: true,
+    }, () => {console.log(this.state)});
+  }
+
+  nextMovieModalHandler = () => {
+    if (MovieStore.latestMovies.length > this.state.curMovie + 1)
+      this.setState({
+        curMovie: this.state.curMovie + 1,
+      })
+    else if((MovieStore.latestMovies.length == this.state.curMovie + 1) && MovieStore.curPage < MovieStore.maxPage) {
+      MovieStore.getLatestMovies(MovieStore.curPage + 1)
+        .then(() => {
+          this.setState({
+            curMovie: 0,
+          });
+        })
+      
+    }
+    
+  }
+
+  backToListModalHandler = () => {
+
+  }
+
   renderLatestMovies = () => {
     return(
       <div className={'movieList'}>
         { 
           MovieStore.latestMovies.map((item, index) => {
-            return <div className={'movieItem'} key={index}>
-              <img src={item.poster_url} data-tip={item.title}/>
-              <ReactTooltip effect={'solid'} type={'info'} delayShow={200}/>
-            </div>
+            return  <div className={'movieItem'} key={index}>
+                      <img  src       = {item.poster_url} 
+                            data-tip  = {item.title} 
+                            onClick   = {() => this.movieSelectHandler(index)}/>
+                      <ReactTooltip effect={'solid'} type={'info'} delayShow={200}/>
+                    </div>
           })
         }
       </div>
@@ -64,6 +105,12 @@ class MainPage extends Component
               </div>
             </div>
           </div>
+          { this.state.showModal  ? <MovieDetailModal movieList         = { MovieStore.latestMovies } 
+                                                      curMovie          = { this.state.curMovie } 
+                                                      showModal         = { this.state.showModal }
+                                                      nextMovieHandler  = { this.nextMovieModalHandler }/>
+                                  : ''
+          }
         </div>
     )
   }

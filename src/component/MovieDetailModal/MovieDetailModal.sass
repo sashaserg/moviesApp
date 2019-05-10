@@ -1,0 +1,150 @@
+.MovieDetailModal-container
+    position: absolute
+    top: 0
+    width: 100%
+    height: 100%
+    overflow: hidden
+    .modalBg
+        z-index: -1
+        height: 100%
+        // background: linear-gradient( rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65) ), url('http://image.tmdb.org/t/p/w342/or06FN3Dka5tukK1e9sl16pB3iy.jpg')
+        background-repeat: no-repeat
+        background-size: cover
+        background-position: center
+        filter: blur(8px) brightness(0.6)
+        transform: scale(1.1)
+    .modalContent
+        position: absolute
+        top: 0
+        height: 100%
+        width: 100%
+        display: flex
+        flex-direction: column
+        .controlHeader
+            display: flex 
+            flex-direction: row
+            justify-content: space-between
+            .controlField
+                color: #bfbdbd
+                display: flex
+                align-items: center
+                padding: 4px
+                box-sizing: border-box
+                cursor: pointer
+                &:hover
+                    color: #ffffff
+                &:first-child
+                    margin: 28px 0 0 28px
+                    .title
+                        margin-left: 28px
+                &:last-child
+                    margin: 28px 28px 0 0
+                    .title
+                        margin-right: 28px
+                .title
+                    font-size: 24px
+        .content-wrapper
+            margin-top: 100px
+            .content
+                margin: 0 80px
+                display: flex
+                .poster
+                    min-width: 15%
+                    img
+                        width: 100%
+                        height: 100%
+                        border-radius: 5px
+                        box-shadow: 0px 0px 15px 2px rgba(0,0,0,0.35)
+                .movieInfoField
+                    display: flex
+                    flex-direction: column
+                    margin-left: 60px
+                    color: #ffffff
+                    width: 100%
+                    .toFavoriteField
+                        display: flex
+                        justify-content: flex-end
+                        a
+                            padding: 8px 12px
+                            border: 1px #737373 solid
+                            border-radius: 5px
+                            cursor: pointer
+                            color: #bfbdbd
+                            &:hover
+                                color: #ffffff
+                                border: 1px #ffffff solid
+                    .movieTitleField
+                        .title
+                            font-size: 24px
+                    .movieDetailsField
+                        display: flex
+                        margin-top: 16px
+                        span
+                            padding: 0 16px
+                            border-right: 1px #7d7d7d73 solid;
+                            &:first-child
+                                padding-left: 0
+                            &:last-child
+                                border-right: none
+                    .movieDescriptionField
+                        margin-top: 32px
+                        padding-top: 16px
+                        padding-bottom: 16px
+                        border-top: 1px #7d7d7d73 solid
+                        border-bottom: 1px #7d7d7d73 solid
+                        .description
+                            line-height: 1.4em
+            .movieInfoMobile
+                position: relative
+                display: none
+                flex-direction: column
+                flex: 1
+                justify-content: space-between
+                margin-left: 30px
+                margin-bottom: 8px
+                span
+                    font-size: 21px
+                    color: #ffffff
+                    .detailsValue
+                        margin-top: 5px
+                        font-weight: 800
+                .toFavoriteField
+                    position: absolute
+                    right: 0
+                    font-size: 32px
+                    color: #ffffff
+                    border: 1px #ffffff solid
+                    border-radius: 5px
+                    padding: 5px 5px 7px 5px
+                    cursor: pointer
+
+
+@media screen and (max-width: 1050px)
+    .content-wrapper
+        .content
+            margin: 0 32px !important
+            .movieInfoField
+                margin-left: 30px !important
+            
+@media screen and (max-width: 650px)
+    .content-wrapper
+        .content
+            flex-wrap: wrap
+            .poster
+                width: 40% !important
+            .movieInfoField
+                margin-left: 0 !important
+                margin-top: 60px
+                .toFavoriteField
+                    display: none !important
+                .movieDetailsField
+                    display: none !important
+                .movieTitleField
+                    .title
+                        font-size: 24px !important
+            .movieInfoMobile
+                display: flex !important
+
+    .controlHeader
+        .mobileHide
+            display: none !important
