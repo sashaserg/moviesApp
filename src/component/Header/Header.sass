@@ -7,18 +7,27 @@
     div
         margin: 0 32px
     .brandField
-        color: #ffffff
+        color: #ffffff !important
         display: flex
         align-items: center
         .icon
             font-size: 32px
         span
             margin-left: 8px
+        a
+            color: #ffffff
     .myAccountField
         padding: 10px 15px
         color: #ffffff
         cursor: pointer
         border: 1px gray solid
         border-radius: 3px
+        a
+            color: #ffffff
+            text-decoration: none
         .btn
             margin-right: 8px
+@media screen and (max-width: 650px)
+    .myAccountField
+        .btn
+            display: none

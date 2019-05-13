@@ -3,36 +3,34 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 
 /* style */
-import './MovieDetailModal.sass';
+import './MovieDetailsPage.sass';
 
 /* store */
 import MovieStore from '../../store/MovieStore/MovieStore.js';
-import { observer } from 'mobx-react';
 
-@observer
-class MovieDetailModal extends Component {
+class MovieDetailsPage extends Component {
 
     setMovieToFavorite = (mId) => {
-		console.log("TCL: MovieDetailModal -> setMovieToFavorite -> mId", mId)
+        console.log(mId);
         MovieStore.setLatestMovieToFavorite(mId);
     } 
 
     render() {
-        if(!this.props.showModal)
-            return <div></div>
+
+        
 
         const movie = this.props.movieList[this.props.curMovie];
+        const displayModal = this.props.showModal ? 'block' : 'none';
         const isFavorite = movie.favorite ? 'isFavorite' : '';
-		console.log("TCL: MovieDetailModal -> render -> isFavorite", isFavorite);
         const posterUrl = movie.poster_url;
-
+        console.log(movie);
         const movieDate = new Date(movie.release_date);
         const movieYear = parseInt(movie.release_date);
         const movieDay = movieDate.getDate();
         const movieMonthName = movieDate.toLocaleString('en-us', { month: 'long' });
         
         return(
-            <div className={'MovieDetailModal-container'}>
+            <div className={'MovieDetailsPage-container'} style={{display: displayModal}}>
                 <div className={'modalBg'} style={{
                     backgroundImage: 'url("' + posterUrl + '")',
                 }}></div>
@@ -107,4 +105,4 @@ class MovieDetailModal extends Component {
     }
 }
 
-export default MovieDetailModal;
+export default MovieDetailsPage;

@@ -16,12 +16,16 @@ class Header extends Component
     return (
         <div className='Header-container'>
             <div className={'brandField'}>
-                <FontAwesomeIcon icon={'kiss-beam'} className={'icon'}/>
+                <Link to='/'>
+                  <FontAwesomeIcon icon={'kiss-beam'} className={'icon'}/>
+                </Link>
                 <span>Movies</span>
             </div>
             <div className={'myAccountField'}>
-                <a className={'btn'}>My Account</a>
-                <FontAwesomeIcon icon={'chevron-down'} className={'icon'}/>
+                <Link to='/favorite'>
+                  <span className={'btn'}>My Account</span>
+                  <FontAwesomeIcon icon={'chevron-down'} className={'icon'}/>
+                </Link>
             </div>
         </div>
     )

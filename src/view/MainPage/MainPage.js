@@ -61,7 +61,10 @@ class MainPage extends Component
   }
 
   backToListModalHandler = () => {
-
+    this.setState({
+      curMovie: null,
+      showModal: false,
+    })
   }
 
   renderLatestMovies = () => {
@@ -73,7 +76,7 @@ class MainPage extends Component
                       <img  src       = {item.poster_url} 
                             data-tip  = {item.title} 
                             onClick   = {() => this.movieSelectHandler(index)}/>
-                      <ReactTooltip effect={'solid'} type={'info'} delayShow={200}/>
+                      
                     </div>
           })
         }
@@ -94,9 +97,10 @@ class MainPage extends Component
 
   render()
   {
+    const wrapperClass = this.state.showModal ? '-modalActive' : ''; 
     return (
         <div className='MainPage-container'>
-          <div className={'wrapper'}>
+          <div className={'wrapper' + wrapperClass}>
             <div className={'title'}><p>Latest Releases</p></div>
             <div className={'content'}>
               { !MovieStore.isFetching ? this.renderLatestMovies() : this.renderSpinner()}
@@ -105,12 +109,12 @@ class MainPage extends Component
               </div>
             </div>
           </div>
-          { this.state.showModal  ? <MovieDetailModal movieList         = { MovieStore.latestMovies } 
-                                                      curMovie          = { this.state.curMovie } 
-                                                      showModal         = { this.state.showModal }
-                                                      nextMovieHandler  = { this.nextMovieModalHandler }/>
-                                  : ''
-          }
+          <MovieDetailModal showModal         = { this.state.showModal }
+                            movieList         = { MovieStore.latestMovies } 
+                            curMovie          = { this.state.curMovie } 
+                            nextMovieHandler  = { this.nextMovieModalHandler }
+                            backToListHandler = { this.backToListModalHandler }/>
+                                  
         </div>
     )
   }

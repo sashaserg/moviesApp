@@ -2,6 +2,7 @@
     width: 100%
     flex: 1
     position: relative
+    display: flex
     .wrapper
         flex: 1
         padding: 18px 32px
@@ -13,15 +14,16 @@
             width: 100%
             display: flex
             flex-direction: column
-            margin-top: 12px
+            margin-top: 24px
             .movieList
                 width: 100%
                 display: flex
-                flex-wrap: wrap 
+                flex-wrap: wrap
+                justify-content: center 
                 .movieItem
                     box-sizing: border-box
                     padding: 10px 5px
-                    max-width: 10%
+                    max-width: calc(100%/7)
                     img
                         cursor: pointer
                         height: 100%
@@ -34,7 +36,14 @@
                 margin-top: 16px
                 display: flex
                 justify-content: center
+    .wrapper-modalActive
+        display: none !important
 
 @media screen and (max-width: 1280px)
     .movieItem
-        max-width: 20% !important                
+        max-width: 20% !important
+@media screen and (max-width: 650px)
+    .MainPage-container
+        position: static !important
+    .movieItem
+        max-width: 50% !important
