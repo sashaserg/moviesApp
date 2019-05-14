@@ -47,6 +47,7 @@
             .content
                 margin: 0 80px
                 display: flex
+                min-width: 235px
                 .poster
                     min-width: 15%
                     img
@@ -130,24 +131,36 @@
                 margin-left: 30px !important
             
 @media screen and (max-width: 650px)
-    .content-wrapper
-        .content
-            flex-wrap: wrap
-            .poster
-                width: 40% !important
-            .movieInfoField
-                margin-left: 0 !important
-                margin-top: 60px
-                .toFavoriteField
-                    display: none !important
-                .movieDetailsField
-                    display: none !important
-                .movieTitleField
-                    .title
-                        font-size: 24px !important
-            .movieInfoMobile
-                display: flex !important
+    .MovieDetailModal-container
+        z-index: 1
+        .modalContent
+            .content-wrapper
+                .content
+                    flex-wrap: wrap
+                    .poster
+                        width: 40% !important
+                    .movieInfoField
+                        margin-left: 0 !important
+                        margin-top: 60px
+                        .toFavoriteField
+                            display: none !important
+                        .movieDetailsField
+                            display: none !important
+                        .movieTitleField
+                            .title
+                                font-size: 21px !important
+                    .movieInfoMobile
+                        display: flex !important
 
-    .controlHeader
-        .mobileHide
-            display: none !important
+            .controlHeader
+                .mobileHide
+                    display: none !important
+
+@media screen and (max-width: 420px)
+    .movieInfoField
+        .movieDescriptionField
+            .description
+                font-size: 14px !important
+    .movieInfoMobile
+        span
+            font-size: 16px !important

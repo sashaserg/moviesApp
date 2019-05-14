@@ -76,10 +76,10 @@ class MainPage extends Component
                       <img  src       = {item.poster_url} 
                             data-tip  = {item.title} 
                             onClick   = {() => this.movieSelectHandler(index)}/>
-                      
                     </div>
           })
         }
+        <ReactTooltip delayShow={300} effect={'solid'} type={'info'}/>
       </div>
     )
   }

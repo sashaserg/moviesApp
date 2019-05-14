@@ -24,6 +24,7 @@ class FavoritePage extends Component
       showModal: false,
       curMovie: null,
       shouldEraseText: false,
+      eraseLength: 120,
     };
   }
 
@@ -92,7 +93,7 @@ class FavoritePage extends Component
                             <div className={'movieDescription'}>
                                 <p>{  
                                     !this.state.shouldEraseText ? item.overview 
-                                        : this.eraseStringMaxLength(item.overview, 150) 
+                                        : this.eraseStringMaxLength(item.overview, this.state.eraseLength) 
                                 }</p>
                             </div>
                         </div>

@@ -6,7 +6,6 @@ import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom";
 import DevTools from 'mobx-react-devtools'
 import Header from './component/Header/Header.js';
 import MainPage from './view/MainPage/MainPage.js';
-import MovieDetailsPage from './view/MovieDetailsPage/MovieDetailsPage.js';
 import FavoritePage from './view/FavoritePage/FavoritePage.js';
 
 /* style */

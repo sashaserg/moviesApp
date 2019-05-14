@@ -42,6 +42,7 @@ class MovieStore {
 
             getLatestMoviesByPage(page)
                 .then(({ data }) => {
+                    if (!data) rej('No data');
                     console.log("TCL: MovieStore -> getLatestMovies -> data", data)
                     const arrayOfMovies = data.results.map((item) => {
 
