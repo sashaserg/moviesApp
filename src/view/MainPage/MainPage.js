@@ -6,6 +6,8 @@ import ReactTooltip from 'react-tooltip'
 import Pagination from 'rc-pagination';
 import 'rc-pagination/assets/index.css';
 import { ClipLoader } from 'react-spinners';
+import { connect } from 'react-redux';
+import { getLatestMovies } from '../../actions/moviesActionCreator'
 
 /* style */
 import './MainPage.sass';
@@ -29,7 +31,8 @@ class MainPage extends Component
   }
 
   componentDidMount() {
-    MovieStore.getLatestMovies(1);
+    //MovieStore.getLatestMovies(1);
+    this.props.fetchLatestMovies(1);
   }
 
   changePageHandler = (curPage, pageSize) => {
@@ -92,7 +95,7 @@ class MainPage extends Component
         color={'#123abc'}
         loading={ true }
       />
-  );
+    );
   }
 
   render()
@@ -114,10 +117,22 @@ class MainPage extends Component
                             curMovie          = { this.state.curMovie } 
                             nextMovieHandler  = { this.nextMovieModalHandler }
                             backToListHandler = { this.backToListModalHandler }/>
-                                  
         </div>
     )
   }
 }
 
-export default MainPage;
+const mapStateToProps = (state) => {
+  return {
+      latestMovies: state.moviesReducer.latestMovies,
+      isFetching: state.moviesReducer.isFetching,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+      fetchLatestMovies: (page) => dispatch(getLatestMovies(page))
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(MainPage);
