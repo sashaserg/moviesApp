@@ -42,7 +42,6 @@ export const fetchLatestMoviesDone = (latestMovies, curPage, maxPage) => {
 }
 
 export const setMovieToFavoriteDone = (favoriteMovies_updated, latestMovies_updated) => {
-	console.log("TCL: setMovieToFavoriteDone -> setMovieToFavoriteDone");
     return {
         type: ACTION.SET_MOVIE_TO_FAVORITE,
         favoriteMovies_updated,
@@ -103,7 +102,8 @@ export const getFavoriteMovies = () => {
 
 export const setLatestMovieToFavorite = (mId) => {
     return (dispatch, getState) => {
-        const { latestMovies, favoriteMovies } = getState().moviesReduce;
+        const latestMovies = [...getState().moviesReducer.latestMovies];
+        const favoriteMovies = [...getState().moviesReducer.favoriteMovies];
         const index = findWithAttr(latestMovies, 'id', mId);
         const movie = latestMovies[index];
 
@@ -117,12 +117,13 @@ export const setLatestMovieToFavorite = (mId) => {
 
 export const unsetMovieFromFavorite = (mId) => {
     return (dispatch, getState) => {
-        const { favoriteMovies } = getState().moviesReduce;
+        const favoriteMovies = [...getState().moviesReducer.favoriteMovies];
         const index = findWithAttr(favoriteMovies, 'id', mId);
-        const movie = favoriteMovies[index];
+        // const movie = favoriteMovies[index];
 
-        movie.favorite = false;
+        // movie.favorite = false;
         favoriteMovies.splice(index, 1);
+		console.log("TCL: unsetMovieFromFavorite -> favoriteMovies", favoriteMovies);
         dispatch(unsetMovieFromFavoriteDone(favoriteMovies));
         dispatch(saveFavoriteMoviesToLocalStore());
     }
@@ -130,7 +131,7 @@ export const unsetMovieFromFavorite = (mId) => {
 
 export const saveFavoriteMoviesToLocalStore = () => {
     return (dispatch, getState) => {
-        const { favoriteMovies } = getState().moviesReduce;
+        const { favoriteMovies } = getState().moviesReducer;
         localStorage.setItem("favoriteMovies", JSON.stringify(favoriteMovies));
     }
 }

@@ -20,7 +20,6 @@ export default function (state = initialState, action) {
             }
         }
         case ACTION.LATEST_MOVIES_RESPONSE: {
-			console.log("TCL: LATEST_MOVIES_RESPONSE", action);
             return {
                 ...state,
                 latestMovies: action.latestMovies,
@@ -47,6 +46,8 @@ export default function (state = initialState, action) {
             }
         }
         case ACTION.UNSET_MOVIE_FROM_FAVORITE: {
+            
+			console.log("TCL: action.favoriteMovies_updated", action.favoriteMovies_updated)
             return {
                 ...state,
                 favoriteMovies: action.favoriteMovies_updated,

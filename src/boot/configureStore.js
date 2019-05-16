@@ -9,8 +9,8 @@ const configureStore = () => {
     const middleware = [
         thunk,
     ];
-    const store = createStore(combinedReducers, compose(applyMiddleware(...middleware)));
-    return store;
+    return createStore(combinedReducers, compose(applyMiddleware(...middleware)));
+    // return store;
 }
 
 export default configureStore;

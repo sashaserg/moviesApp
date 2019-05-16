@@ -3,19 +3,17 @@ import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { observer } from 'mobx-react';
 import { ClipLoader } from 'react-spinners';
+import { connect } from 'react-redux';
+
+/* action */
+import { getFavoriteMovies, unsetMovieFromFavorite } from '../../actions/moviesActionCreator'
 
 /* style */
 import './FavoritePage.sass';
 
-/* store */
-import MovieStore from '../../store/MovieStore/MovieStore.js';
-
 /* component */
 import MovieDetailModal from '../../component/MovieDetailModal/MovieDetailModal.js';
 
-
-
-@observer
 class FavoritePage extends Component
 {
   constructor(props) {
@@ -28,10 +26,8 @@ class FavoritePage extends Component
     };
   }
 
-  componentDidMount() {
-    window.addEventListener('resize', (e) => {
-        // e.target.innerWidth
-        if(e.target.innerWidth <= 650 && !this.state.shouldEraseText)
+  windowResizeHandler = (e) => {
+    if(e.target.innerWidth <= 650 && !this.state.shouldEraseText)
             this.setState({
                 shouldEraseText: true,
             })
@@ -39,8 +35,11 @@ class FavoritePage extends Component
             this.setState({
                 shouldEraseText: false,
             })
-    });
-    MovieStore.getFavoriteFromLocalStore();
+  }
+
+  componentDidMount() {
+    window.addEventListener('resize', this.windowResizeHandler);
+    this.props.getFavoriteMovies();
   }
 
   eraseStringMaxLength = (string, maxLength) => {
@@ -57,7 +56,7 @@ class FavoritePage extends Component
   }
 
   nextMovieModalHandler = () => {
-    if (MovieStore.favoriteMovies.length > this.state.curMovie + 1)
+    if (this.props.favoriteMovies.length > this.state.curMovie + 1)
       this.setState({
         curMovie: this.state.curMovie + 1,
       });
@@ -71,14 +70,14 @@ class FavoritePage extends Component
   }
 
   unfavoriteMovieHandler = (mId) => {
-    MovieStore.unsetMovieFromFavorite(mId);
+    this.props.unsetMovieFromFavorite(mId);
   }
 
   renderFavoriteMovies = () => {
     return(
       <div className={'movieList'}>
         { 
-          MovieStore.favoriteMovies.map((item, index) => {
+          this.props.favoriteMovies.map((item, index) => {
             return  <div className={'listItem'} key={index}>
                         <div className={'moviePoster'}>
                             <img src = { item.poster_url } onClick={() => this.movieSelectHandler(index)}/>
@@ -124,17 +123,36 @@ class FavoritePage extends Component
           <div className={'wrapper' + wrapperClass}>
             <div className={'title'}><p>My favorite</p></div>
             <div className={'content'}>
-              { !MovieStore.isFetching ? this.renderFavoriteMovies() : this.renderSpinner()}
+              { !this.props.isFetching ? this.renderFavoriteMovies() : this.renderSpinner()}
             </div>
           </div>
           <MovieDetailModal showModal         = { this.state.showModal }
-                            movieList         = { MovieStore.favoriteMovies } 
+                            movieList         = { this.props.favoriteMovies } 
                             curMovie          = { this.state.curMovie } 
                             nextMovieHandler  = { this.nextMovieModalHandler }
                             backToListHandler = { this.backToListModalHandler }/>
         </div>
     )
   }
+
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.windowResizeHandler);
+  }
 }
 
-export default FavoritePage;
+const mapStateToProps = (state) => {
+	console.log("TCL: mapStateToProps -> state", state); // после анфейворита тут всё как нужно. 
+  return {
+      favoriteMovies: state.moviesReducer.favoriteMovies,
+      isFetching: state.moviesReducer.isFetching,
+  };
+};
+
+const mapDispatchToProps = (dispatch) => {
+  return {
+    getFavoriteMovies: () => dispatch(getFavoriteMovies()),
+    unsetMovieFromFavorite: (mId) => dispatch(unsetMovieFromFavorite(mId)),
+  };
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(FavoritePage);

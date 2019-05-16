@@ -13,6 +13,7 @@ class Setup extends Component {
     }
 
     render() {
+        console.log("TCL: Setup -> render -> this.state.store", this.state.store);
         return (
             <Provider store={this.state.store}>
                 <App/>

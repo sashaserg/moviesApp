@@ -1,29 +1,27 @@
 /* library */
 import React, { Component } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { connect } from 'react-redux';
+import { setLatestMovieToFavorite } from '../../actions/moviesActionCreator'
 
 /* style */
 import './MovieDetailModal.sass';
 
-/* store */
-import MovieStore from '../../store/MovieStore/MovieStore.js';
-import { observer } from 'mobx-react';
-
-@observer
 class MovieDetailModal extends Component {
 
     setMovieToFavorite = (mId) => {
-		console.log("TCL: MovieDetailModal -> setMovieToFavorite -> mId", mId)
-        MovieStore.setLatestMovieToFavorite(mId);
+        this.props.setLatestMovieToFavorite(mId);
+        // const elementsToAddClass = Array.from(document.getElementsByClassName('toFavoriteField'));
+        // elementsToAddClass.forEach((elem) => elem.className += ' isFavorite');
     } 
 
     render() {
         if(!this.props.showModal)
             return <div></div>
 
+        console.log(this.props);
         const movie = this.props.movieList[this.props.curMovie];
         const isFavorite = movie.favorite ? 'isFavorite' : '';
-		console.log("TCL: MovieDetailModal -> render -> isFavorite", isFavorite);
         const posterUrl = movie.poster_url;
 
         const movieDate = new Date(movie.release_date);
@@ -54,7 +52,7 @@ class MovieDetailModal extends Component {
                             </div>
 
                             <div className={'movieInfoMobile'}>
-                                <div className={'toFavoriteField ' + isFavorite} onClick={() => this.setMovieToFavorite(movie.id)}>
+                                <div className={`toFavoriteField ${isFavorite}`} onClick={() => this.setMovieToFavorite(movie.id)}>
                                     <FontAwesomeIcon icon={'star'}/>
                                 </div>
                                 
@@ -107,4 +105,10 @@ class MovieDetailModal extends Component {
     }
 }
 
-export default MovieDetailModal;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setLatestMovieToFavorite: (mId) => dispatch(setLatestMovieToFavorite(mId))
+    };
+  };
+
+export default connect(null, mapDispatchToProps)(MovieDetailModal);
